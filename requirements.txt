@@ -1,6 +1,6 @@
 setuptools==70.3.0
 twelvedata==0.1.6
-pandas==2.2.3
-numpy==1.26.4
+pandas==2.2.3 --only-binary=:all:
+numpy==1.26.4 --only-binary=:all:
 python-telegram-bot==20.7
 requests==2.31.0
