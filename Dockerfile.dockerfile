@@ -1,17 +1,21 @@
-# Use an official Python runtime as a parent image
 FROM python:3.11-slim
 
-# Set the working directory in the container
 WORKDIR /app
 
-# Copy the requirements file into the container
+# Install system dependencies needed for numpy/pandas
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements first (for better caching)
 COPY requirements.txt .
 
-# Install the required Python packages
+# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of your bot's code into the container
+# Copy the bot code
 COPY bot.py .
 
-# Run bot.py when the container launches
+# Run the bot
 CMD ["python", "bot.py"]
