@@ -1,17 +1,19 @@
-FROM python:3.14-slim
+FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install pre-compiled pandas/numpy from Debian repos
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    python3-pandas \
-    python3-numpy \
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Python dependencies
+# Copy requirements and install
 COPY requirements.txt .
-RUN pip install --no-cache-dir twelvedata python-telegram-bot requests
+RUN pip install --no-cache-dir -r requirements.txt
 
-COPY forex_signals.py .
+# Copy bot code
+COPY bot.py .
 
-CMD ["python", "forex_signals.py"]
+# Run the bot
+CMD ["python", "bot.py"]
