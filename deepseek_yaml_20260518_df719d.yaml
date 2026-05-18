@@ -1,0 +1,14 @@
+services:
+  - type: cron
+    name: forex-signal-bot
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python bot.py
+    schedule: "*/6 * * * *"
+    envVars:
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: TELEGRAM_CHAT_ID
+        sync: false
+      - key: TWELVEDATA_API_KEY
+        sync: false
